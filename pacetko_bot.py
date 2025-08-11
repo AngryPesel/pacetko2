@@ -153,6 +153,11 @@ async def reply_mentions(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if "пацєтко" in text or "pacetko" in text:
         await update.message.reply_text(random.choice(REPLY_PHRASES))
 
+@dp.message_handler(lambda message: any(word in message.text.lower() for word in ["паця", "пацєтко", "сталкер"]))
+async def handle_keywords(message: types.Message):
+     await update.message.reply_text(random.choice(REPLY_PHRASES))
+    # твій код, який виконується при збігу
+    
 # --- Запуск бота ---
 app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
@@ -163,4 +168,5 @@ app.add_handler(CommandHandler("pet", pet))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, reply_mentions))
 
 print("Бот запущений!")
+
 app.run_polling()
